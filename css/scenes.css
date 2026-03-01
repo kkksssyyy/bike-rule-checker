@@ -1,0 +1,241 @@
+/* ============================================================
+   scenes.css - 自転車ルールチェッカー シーン別スタイル
+   ============================================================ */
+
+/* ============================================================
+   シーンタイプ別 背景グラデーション
+   .scene-area に付与するクラスで切り替わる
+   ============================================================ */
+
+/* --- road_daytime: 日中の道路 --- */
+.scene-road-daytime {
+  background: linear-gradient(
+    160deg,
+    #87CEEB 0%,   /* 空色 */
+    #AED9F5 40%,
+    #6B8E6B 60%,  /* 遠景の緑 */
+    #555555 80%,  /* 道路グレー */
+    #444444 100%
+  );
+}
+
+/* --- road_night: 夜の道路 --- */
+.scene-road-night {
+  background: linear-gradient(
+    160deg,
+    #0D0D1A 0%,   /* 深夜 */
+    #1A1A3E 40%,
+    #2D2D5E 60%,
+    #1C1C1C 80%,
+    #111111 100%
+  );
+  animation: night-glow 3s ease-in-out infinite;
+}
+
+.scene-road-night .scene-description {
+  background: rgba(0, 0, 50, 0.5);
+}
+
+/* --- road_rain: 雨の日の道路 --- */
+.scene-road-rain {
+  background: linear-gradient(
+    160deg,
+    #546E7A 0%,   /* 灰色の空 */
+    #78909C 30%,
+    #607D8B 60%,
+    #455A64 80%,
+    #37474F 100%
+  );
+  position: relative;
+  overflow: hidden;
+}
+
+/* 雨粒エフェクト（疑似要素） */
+.scene-road-rain::before {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 8px,
+      rgba(174, 214, 241, 0.3) 8px,
+      rgba(174, 214, 241, 0.3) 9px
+    );
+  background-size: 10px 100%;
+  animation: rain-fall 0.8s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* --- intersection: 交差点 --- */
+.scene-intersection {
+  background: linear-gradient(
+    160deg,
+    #87CEEB 0%,
+    #B0D9F5 35%,
+    #909090 55%,  /* 道路 */
+    #787878 70%,
+    #5A5A5A 100%
+  );
+  position: relative;
+}
+
+/* 横断歩道ストライプ（疑似要素） */
+.scene-intersection::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30%;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(255,255,255,0.6) 0px,
+    rgba(255,255,255,0.6) 12px,
+    transparent 12px,
+    transparent 20px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* --- sidewalk: 歩道 --- */
+.scene-sidewalk {
+  background: linear-gradient(
+    160deg,
+    #81C784 0%,   /* 緑の植栽 */
+    #A5D6A7 30%,
+    #BDBDBD 55%,  /* 歩道タイル */
+    #9E9E9E 75%,
+    #757575 100%
+  );
+}
+
+/* --- slope: 坂道 --- */
+.scene-slope {
+  background: linear-gradient(
+    145deg,
+    #90CAF9 0%,
+    #B3E5FC 25%,
+    #81C784 45%,
+    #777777 65%,  /* 坂道 */
+    #5D5D5D 100%
+  );
+  transform-origin: bottom;
+}
+
+/* --- station_area: 駅周辺 --- */
+.scene-station-area {
+  background: linear-gradient(
+    160deg,
+    #CFD8DC 0%,
+    #ECEFF1 30%,
+    #B0BEC5 55%,  /* コンクリート */
+    #90A4AE 75%,
+    #607D8B 100%
+  );
+}
+
+
+/* ============================================================
+   シーン別 絵文字アニメーション（自転車の状態）
+   ============================================================ */
+
+/* 通常走行シーン（日中道路・交差点） */
+.scene-road-daytime .scene-emoji,
+.scene-intersection .scene-emoji {
+  animation: scene-emoji-enter 0.5s ease both, bike-ride 2s ease-in-out infinite 0.5s;
+}
+
+/* 夜間走行 */
+.scene-road-night .scene-emoji {
+  animation: scene-emoji-enter 0.5s ease both, bike-ride 2.5s ease-in-out infinite 0.5s;
+  filter: drop-shadow(0 0 8px rgba(255, 220, 50, 0.8));
+}
+
+/* 雨天走行 */
+.scene-road-rain .scene-emoji {
+  animation: scene-emoji-enter 0.5s ease both, bike-ride 1.8s ease-in-out infinite 0.5s;
+  position: relative;
+  z-index: 1;
+}
+
+/* 歩道 */
+.scene-sidewalk .scene-emoji {
+  animation: scene-emoji-enter 0.5s ease both, bike-ride 2.2s ease-in-out infinite 0.5s;
+}
+
+/* 坂道（微妙にスピード感） */
+.scene-slope .scene-emoji {
+  animation: scene-emoji-enter 0.5s ease both, bike-fast 1.5s ease-in-out infinite 0.5s;
+}
+
+/* 駅周辺（混雑、ゆっくり） */
+.scene-station-area .scene-emoji {
+  animation: scene-emoji-enter 0.5s ease both, bike-ride 3s ease-in-out infinite 0.5s;
+}
+
+
+/* ============================================================
+   シーン別 場面説明テキスト 微調整
+   ============================================================ */
+
+.scene-road-night .scene-description {
+  color: #E3F2FD;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.8);
+}
+
+.scene-road-rain .scene-description {
+  position: relative;
+  z-index: 1;
+  background: rgba(0, 30, 50, 0.45);
+}
+
+.scene-intersection .scene-description {
+  position: relative;
+  z-index: 1;
+}
+
+.scene-slope .scene-description {
+  position: relative;
+  z-index: 1;
+}
+
+
+/* ============================================================
+   結果画面 タイプ別カラー演出
+   ============================================================ */
+
+/* 🏆 完璧（100%） */
+.result-type--perfect .result-type-card {
+  background: linear-gradient(135deg, #F9A825 0%, #F57F17 100%);
+  box-shadow: 0 8px 32px rgba(249, 168, 37, 0.4);
+}
+
+.result-type--perfect .result-emoji {
+  animation: result-bounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) both,
+             star-twinkle 1.5s ease-in-out 0.8s infinite;
+}
+
+/* ✅ 安全運転（90〜99%） */
+.result-type--safe .result-type-card {
+  background: linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%);
+  box-shadow: 0 8px 32px rgba(46, 125, 50, 0.4);
+}
+
+/* ⚠️ 注意（70〜89%） */
+.result-type--caution .result-type-card {
+  background: linear-gradient(135deg, #E65100 0%, #BF360C 100%);
+  box-shadow: 0 8px 32px rgba(230, 81, 0, 0.4);
+}
+
+/* 🚨 危険（69%以下） */
+.result-type--danger .result-type-card {
+  background: linear-gradient(135deg, #B71C1C 0%, #7F0000 100%);
+  box-shadow: 0 8px 32px rgba(183, 28, 28, 0.4);
+}

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🚲 自転車ルールチェッカー | 2026年反則通告制度</title>
+  <meta name="description" content="2026年4月から始まる自転車交通反則通告制度をゲーム形式で学習。警察庁情報に基づく反則行為・反則金を25問のクイズで確認できます。">
+  <meta property="og:title" content="🚲 自転車ルールチェッカー">
+  <meta property="og:description" content="2026年4月施行の自転車交通反則通告制度をゲームで学ぼう！">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kkksssyyy.github.io/bike-rule-checker/">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚲</text></svg>">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/scenes.css">
+</head>
+<body>
+
+  <!-- ========================================
+       タイトル画面 (#screen-title)
+       ======================================== -->
+  <div id="screen-title" class="screen active">
+    <div class="container">
+      <div class="title-content">
+
+        <div class="title-bike-icon" aria-hidden="true">🚲</div>
+        <h1 class="app-title">自転車ルール<br>チェッカー</h1>
+        <p class="app-subtitle">
+          2026年4月から始まる<br>
+          <strong>自転車交通反則通告制度</strong>を<br>
+          ゲーム感覚で学ぼう！
+        </p>
+
+        <div class="info-card">
+          <div class="info-item">
+            <span class="info-icon" aria-hidden="true">📝</span>
+            <span>全 <strong id="total-count">25</strong> 問 ランダム出題</span>
+          </div>
+          <div class="info-item">
+            <span class="info-icon" aria-hidden="true">🔄</span>
+            <span>正解するまで次に進めない</span>
+          </div>
+          <div class="info-item">
+            <span class="info-icon" aria-hidden="true">📊</span>
+            <span>全問終了後にタイプ診断</span>
+          </div>
+        </div>
+
+        <button id="btn-start" class="btn btn-start">
+          🚴 ゲームスタート
+        </button>
+
+        <!-- 広告エリア（config.jsのadCodeが設定されている場合のみ表示） -->
+        <div id="ad-title" class="ad-area" hidden></div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ========================================
+       ゲーム画面 (#screen-game)
+       ======================================== -->
+  <div id="screen-game" class="screen">
+    <div class="container">
+
+      <!-- 進捗バー -->
+      <div class="progress-area">
+        <div class="progress-header">
+          <span id="progress-text" class="progress-text">問題 1 / 25</span>
+          <span id="progress-percent" class="progress-percent">0%</span>
+        </div>
+        <div class="progress-bar"
+             role="progressbar"
+             aria-valuenow="0"
+             aria-valuemin="0"
+             aria-valuemax="100"
+             aria-label="進捗">
+          <div id="progress-fill" class="progress-fill" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- シーンエリア（背景グラデーション + 絵文字 + 場面説明） -->
+      <div id="scene-area" class="scene-area scene-road-daytime">
+        <div class="scene-inner">
+          <div id="scene-emoji" class="scene-emoji" aria-hidden="true">🚲🚦🔴</div>
+          <p id="scene-description" class="scene-description">
+            場面の説明テキストがここに入ります。どんなシチュエーションなのかが表示されます。
+          </p>
+        </div>
+      </div>
+
+      <!-- 問題文カード -->
+      <div class="question-card">
+        <p id="question-text" class="question-text">
+          ここに問題文が入ります。具体的にどうすべきか・どうなるかを問います。
+        </p>
+      </div>
+
+      <!-- フィードバックエリア（回答後に表示） -->
+      <div id="feedback-area" class="feedback-area" hidden>
+        <div id="feedback-header" class="feedback-header">
+          <span id="feedback-mark" class="feedback-mark" aria-hidden="true"></span>
+          <span id="feedback-title" class="feedback-title"></span>
+        </div>
+        <p id="feedback-text" class="feedback-text"></p>
+        <div id="feedback-detail" class="feedback-detail" hidden></div>
+        <div id="feedback-penalty" class="feedback-penalty" hidden></div>
+        <p id="retry-message" class="retry-message" hidden>
+          もう一度、正解を選んでください。
+        </p>
+      </div>
+
+      <!-- 選択肢エリア（JSで動的生成。静的確認用プレースホルダーあり） -->
+      <div id="choices-area" class="choices-area">
+        <!-- Phase 4以降でJSが生成。以下は静的レイアウト確認用 -->
+        <button class="choice-btn" data-id="A">
+          <span class="choice-label" aria-hidden="true">A</span>
+          <span class="choice-text">選択肢Aのテキストがここに入ります。</span>
+        </button>
+        <button class="choice-btn" data-id="B">
+          <span class="choice-label" aria-hidden="true">B</span>
+          <span class="choice-text">選択肢Bのテキストがここに入ります。</span>
+        </button>
+        <button class="choice-btn" data-id="C">
+          <span class="choice-label" aria-hidden="true">C</span>
+          <span class="choice-text">選択肢Cのテキストがここに入ります。正解はこちらです。</span>
+        </button>
+      </div>
+
+      <!-- 次の問題へボタン（正解時のみ表示） -->
+      <button id="btn-next" class="btn btn-next" hidden>
+        次の問題へ →
+      </button>
+
+    </div>
+  </div>
+
+
+  <!-- ========================================
+       結果画面 (#screen-result)
+       ======================================== -->
+  <div id="screen-result" class="screen">
+    <div class="container">
+      <div class="result-content">
+
+        <!-- タイプ診断結果 -->
+        <div class="result-type-card">
+          <div id="result-emoji" class="result-emoji" aria-hidden="true">🏆</div>
+          <h2 id="result-type-name" class="result-type-name">完璧な自転車市民</h2>
+        </div>
+
+        <!-- スコア -->
+        <div class="score-card">
+          <div class="score-item">
+            <span class="score-label">正解数</span>
+            <div class="score-value-group">
+              <span id="correct-count" class="score-value score-correct">25</span>
+              <span class="score-unit">/ <span id="total-questions-result">25</span> 問</span>
+            </div>
+          </div>
+          <div class="score-divider" aria-hidden="true"></div>
+          <div class="score-item">
+            <span class="score-label">ミス回数</span>
+            <div class="score-value-group">
+              <span id="miss-count" class="score-value score-miss">0</span>
+              <span class="score-unit">回</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- タイプ別メッセージ -->
+        <div id="type-message" class="type-message">
+          完璧なルール知識で安全な自転車ライフを！
+        </div>
+
+        <!-- 注意喚起バナー -->
+        <div class="law-note" role="note">
+          <span aria-hidden="true">📢</span>
+          2026年4月から<strong>自転車交通反則通告制度</strong>が施行されます。
+          知識を身につけて、安全な自転車ライフを！
+        </div>
+
+        <!-- SNSシェアボタン（config.jsのshareUrlが設定されている場合のみ表示） -->
+        <div id="share-area" class="share-area" hidden>
+          <button id="btn-share" class="btn btn-share">
+            𝕏 結果をXでシェアする
+          </button>
+        </div>
+
+        <!-- リプレイボタン -->
+        <button id="btn-replay" class="btn btn-replay">
+          🔄 もう一度チャレンジ
+        </button>
+
+        <!-- 広告エリア（config.jsのadCodeが設定されている場合のみ表示） -->
+        <div id="ad-result" class="ad-area" hidden></div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- スクリプト（読み込み順序が重要: CONFIG → QUESTIONS → game → ui → share → ad → main） -->
+  <script src="config.js"></script>
+  <script src="data/questions.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/share.js"></script>
+  <script src="js/ad.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+</html>
