@@ -200,8 +200,8 @@ button {
   display: block;
   width: 100%;
   padding: var(--space-md) var(--space-xl);
-  background: #64B5F6;
-  color: #1A237E;
+  background: var(--color-primary);
+  color: #FFFFFF;
   font-size: var(--font-size-xl);
   font-weight: 800;
   border-radius: var(--radius-xl);
@@ -213,10 +213,10 @@ button {
 }
 
 .btn-start:hover {
-  background: #42A5F5;
-  color: #1A237E;
+  background: var(--color-primary-dark);
+  color: #FFFFFF;
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(66, 165, 245, 0.4);
+  box-shadow: 0 6px 20px rgba(21, 101, 192, 0.35);
 }
 
 .btn-start:active {
