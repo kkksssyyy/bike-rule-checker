@@ -200,10 +200,10 @@ button {
   display: block;
   width: 100%;
   padding: var(--space-md) var(--space-xl);
-  background: var(--color-primary);
-  color: var(--color-text-on-primary);
+  background: #FF8F00;
+  color: #1A237E;
   font-size: var(--font-size-xl);
-  font-weight: 700;
+  font-weight: 800;
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-lg);
   transition: background var(--transition-fast),
@@ -213,9 +213,10 @@ button {
 }
 
 .btn-start:hover {
-  background: var(--color-primary-dark);
+  background: #E65100;
+  color: #FFFFFF;
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(21, 101, 192, 0.35);
+  box-shadow: 0 6px 20px rgba(230, 81, 0, 0.4);
 }
 
 .btn-start:active {
@@ -508,16 +509,18 @@ button {
   display: block;
   width: 100%;
   padding: var(--space-md) var(--space-xl);
-  background: var(--color-correct);
+  background: #43A047;
   color: #FFFFFF;
   font-size: var(--font-size-lg);
-  font-weight: 700;
+  font-weight: 800;
   border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 4px 12px rgba(67, 160, 71, 0.45);
   transition: background var(--transition-fast),
-              transform var(--transition-fast);
+              transform var(--transition-fast),
+              box-shadow var(--transition-fast);
   margin-bottom: var(--space-lg);
   animation: fade-in 0.3s ease both;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
 }
 
 .btn-next[hidden] {
@@ -525,8 +528,9 @@ button {
 }
 
 .btn-next:hover {
-  background: #1B5E20;
+  background: #2E7D32;
   transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(46, 125, 50, 0.5);
 }
 
 
