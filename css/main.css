@@ -509,18 +509,17 @@ button {
   display: block;
   width: 100%;
   padding: var(--space-md) var(--space-xl);
-  background: #43A047;
+  background: var(--color-primary);
   color: #FFFFFF;
   font-size: var(--font-size-lg);
   font-weight: 800;
   border-radius: var(--radius-xl);
-  box-shadow: 0 4px 12px rgba(67, 160, 71, 0.45);
+  box-shadow: 0 4px 12px rgba(21, 101, 192, 0.45);
   transition: background var(--transition-fast),
               transform var(--transition-fast),
               box-shadow var(--transition-fast);
   margin-bottom: var(--space-lg);
   animation: fade-in 0.3s ease both;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
 }
 
 .btn-next[hidden] {
@@ -528,9 +527,9 @@ button {
 }
 
 .btn-next:hover {
-  background: #2E7D32;
+  background: var(--color-primary-dark);
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(46, 125, 50, 0.5);
+  box-shadow: 0 6px 16px rgba(13, 71, 161, 0.5);
 }
 
 
