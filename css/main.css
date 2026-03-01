@@ -720,8 +720,6 @@ button {
    ============================================================ */
 .btn {
   display: inline-block;
-  border: none;
-  background: none;
   cursor: pointer;
   font-family: inherit;
   text-align: center;
